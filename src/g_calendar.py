@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import datetime
+from multiprocessing import Event
 import os.path
 
 from google.auth.transport.requests import Request
@@ -14,6 +15,7 @@ SCOPES = ['https://www.googleapis.com/auth/calendar']
 # from event import event_body
 from request_body.event import event_body
 
+#creating class
 class Calendar:
 
     def __init__(self, credentials_file, token_file):
@@ -23,6 +25,8 @@ class Calendar:
     def connect(self):
 
         #==================creating or refreshing token file=============#
+        creds = None
+        
         if os.path.exists(self.token_file):
             creds = Credentials.from_authorized_user_file(self.token_file, SCOPES)
 
@@ -45,12 +49,21 @@ class Calendar:
             print(error)
 
 
-    def create_event(self, name, start_time, end_time, description, location):
+    def __edit_event(self, name, start_date, end_date, start_time, end_time, description, location):
+        event_body['summary'] = name
+        event_body['location'] = location
+        event_body['description'] = description
+        event_body['start']['dateTime'] = f'{start_date}T{start_time}:00-03:00'
+        event_body['end']['dateTime'] = f'{end_date}T{end_time}:00-03:00'
 
-        #I have to create a function to manipulate event_body fields
+
+    def create_event(self, name, start_date, end_date, start_time, end_time, description, location):
+
+        #Function to edit request body
+        self.__edit_event(name, start_date, end_date, start_time, end_time, description, location)
 
         event = self.calendar.events().insert(calendarId='primary', body=event_body).execute()
-        print ('Event created: %s' % (event.get('htmlLink')))
+        print ('\nEvent created: %s\n\n' % (event.get('htmlLink')))
 
 
     def list_events(self):
