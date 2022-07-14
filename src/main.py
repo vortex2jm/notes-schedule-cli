@@ -18,24 +18,33 @@ def main():
         if not operation:
             break
 
-
         elif operation == 1:
             print('note tab')
         
-
         elif operation == 2:
 
             while (True):
-                
+
                 option = int(input('Choose an option:\n0 - back\n1 - list events\n2 - create event\n\n> '))    
                 os.system('clear')
 
                 if not option:
                     break
-
+ 
                 elif option == 1:
-                    calendar.list_events()
-                    i = input('\npress ENTER to continue')
+                    
+                    events = calendar.list_events()
+                    action = int(input('\n0 - back\n1 - delete an event\n\n> '))
+
+                    if action == 1:
+                        if events:
+                            y = int(input('\nChoose which event do you want to delete: '))
+                            calendar.delete_event(events[y-1]['id'])
+                            input('\npress ENTER to continue')
+                        else:
+                            print('You have no events to delete')
+                            input('\npress ENTER to continue')
+
                     os.system('clear')
 
                 elif option == 2:
@@ -62,13 +71,11 @@ def main():
                 else:
                     print('Invalid operation, choose another one!\n')
 
-
         elif operation == 3:
             print('to do list tab')
         
         else:
             print('Invalid operation. Choose another one!\n')
     
-
 if __name__ == '__main__':
     main()

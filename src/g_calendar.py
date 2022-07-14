@@ -96,3 +96,7 @@ class Calendar:
             print(f'{index + 1} -> ', event['summary'], f'|| {date} at {hour}h')
 
         return events
+    
+    def delete_event(self, event_id):
+        self.calendar.events().delete(calendarId='primary', eventId=event_id).execute()
+        print('event deleted!')
