@@ -10,9 +10,9 @@ event_body = {
             'dateTime': '2022-07-15T04:00:00-03:00',
             'timeZone': 'America/Sao_Paulo',
           },
-          'attendees': [
-            {'email': 'joao.clevelares@edu.ufes.br'}
-          ],
+          # 'attendees': [
+          #   {'email': 'joao.clevelares@edu.ufes.br'}
+          # ],
           'reminders': {
             'useDefault': False,
             'overrides': [
