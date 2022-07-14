@@ -75,11 +75,24 @@ class Calendar:
                                               orderBy='startTime').execute()
         events = events_result.get('items', [])
 
+        print('====Events====\n')
+
         if not events:
             print('No upcoming events found.')
             return
 
         # Prints the start and name of the next 10 events
-        for event in events:
-            start = event['start'].get('dateTime', event['start'].get('date'))
-            print(start, event['summary'])
+        for index,event in enumerate(events):
+
+            start = event['start']['dateTime']
+            start = start.split('T')
+
+            date = start[0]
+
+            hour = start[1].split('-')
+            hour = hour[0]
+            hour = hour[0:5]
+
+            print(f'{index + 1} -> ', event['summary'], f'|| {date} at {hour}h')
+
+        return events
