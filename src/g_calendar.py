@@ -13,7 +13,7 @@ from googleapiclient.errors import HttpError
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
 # from event import event_body
-from request_body.event import event_body
+from entities.event import event_body
 
 #creating class
 class Calendar:
