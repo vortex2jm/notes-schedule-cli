@@ -1,9 +1,9 @@
 #! usr/local/bin/python3
-
 from g_calendar import Calendar
 from db import DataBase
 from dotenv import load_dotenv
 from pprint import pprint
+from datetime import date
 import os
 
 DOTENV = "./token/.env"
@@ -37,25 +37,52 @@ def main():
         elif operation == 1:
             
             while (True):
-
-                option = int(input('Choose an option:\n0 - back\n1 - view all notes\n2 - create new note\n3 - delete a note\n\n> '))
+                option = int(input('Choose an option:\n0 - back\n1 - view all notes\n2 - create new note\n> '))
+                os.system('clear')
 
                 if not option:
                     os.system('clear')
                     break
                 
                 elif option == 1:
-                    db.show_table(1)
-
-                    action = int(input('\n0 - back\n1 - delete'))
                     
-                    if action == 1:
-                            print('delete')
+                    while True:
+                        ids = db.list_notes()
 
-                    os.system('clear')
+                        if ids:
+                            action = int(input('\n0 - back\n1 - delete\n2 - open\n> '))
+                        else:
+                            action = int(input('\n0 - back\n> '))
 
+                        if not action:
+                            break
+
+                        if action == 1:
+                            index = int(input('\nWhich note do you want to delete?\n> '))
+                            os.system('clear')
+                            db.delete_note(ids[index-1])
+                            input('\npress ENTER to continue')
+
+                        if action == 2:
+                            index = int(input('\nWhich note do you want to open?\n> '))
+                            os.system('clear')
+                            db.show_note_content(ids[index-1])
+                            input('\npress ENTER to continue')
+                        
+                        os.system('clear')
+
+                    
+                elif option == 2:
+                    title = str(input('Title -> '))
+                    content = str(input('Text -> '))
+                    note_date = date.today().strftime('%d/%m/%y')
+                    db.create_note(title, content, note_date)
+                    print('Note created sucefully!')
+                    input('press ENTER to continue')
                 #waiting for functions
-        
+                
+
+                os.system('clear')
 
         # google calendar
         elif operation == 2:
