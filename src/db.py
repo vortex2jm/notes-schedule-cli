@@ -1,7 +1,6 @@
 from pymongo import MongoClient
 from pprint import pprint
-import datetime
-
+from entities.note import note_body
 
 class DataBase:
 
@@ -16,36 +15,29 @@ class DataBase:
         self.table1 = db.table1 
         
 
-    def show_table(self, num):
-        if num == 1:
-            for i,notes in enumerate(self.table1.find()):
-                print(f'\n{i+1} -> ',notes['comments'])
-
-    
-# load_dotenv('./token/.env')
-
-# client = MongoClient(f'mongodb+srv://{os.getenv("username")}:{os.getenv("password")}@cluster1.vy6ck.mongodb.net/?retryWrites=true&w=majority')
+    def list_notes(self):
+        ids = []
+        print('========All notes=======')        
+        for i,notes in enumerate(self.table1.find()):
+            print(f'{i+1} -> ',notes['title'])
+            ids.append(notes['_id'])        
+        return ids
 
 
-# db = client.database1
-# table1 = db.table1
+    def create_note(self, title, content, date):
+        note_body['title'] = title
+        note_body['content']  = content
+        note_body['date'] = date 
+        self.table1.insert_one(note_body)
 
-# for notes in table1.find():
-#     pprint(notes)
 
-# table1.delete_one(table1.find()[1])
+    def delete_note(self, note_id):
+        self.table1.delete_one({"_id": note_id})
 
-# data = {
 
-#     "name": "Juca",
-#     "comments": "Olá, essa é minha segunda nota",
-#     "date": datetime.datetime.utcnow()
-# }
-
-# table1_id = table1.insert_one(data).inserted_id
-# print(table1_id)
-
-# list = db.list_collection_names()
-# print(list)
-
-# pprint(table1.find_one())
+    def show_note_content(self, note_id):
+        note = self.table1.find_one({'_id' : note_id})
+        title = note['title']
+        content = note['content']
+        print(f'===={title}====')
+        print(f'* {content}')
