@@ -26,7 +26,7 @@ def main():
     print('==========My Notes==========\n')
     while(True):
 
-        operation = int(input('Choose one operation\n-> 0 - exit\n-> 1 - notes\n-> 2 - calendar\n-> 3 - to do list\n\n> '))
+        operation = int(input('Choose one operation\n-> 0 - exit\n-> 1 - notes\n-> 2 - calendar\n\n> '))
         os.system('clear')
 
         # Exit
@@ -47,7 +47,8 @@ def main():
                 elif option == 1:
                     
                     while True:
-                        ids = db.list_notes()
+                        # ids = notes Id's
+                        ids = db.list_notes() 
 
                         if ids:
                             action = int(input('\n0 - back\n1 - delete\n2 - open\n> '))
@@ -141,10 +142,6 @@ def main():
                 # if operation do not exists
                 else:
                     print('Invalid operation, choose another one!\n')
-
-        # to do list
-        elif operation == 3:
-            print('to do list tab')
         
         # if operation do not exists
         else:
