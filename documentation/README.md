@@ -1,6 +1,3 @@
-# Notes CLI
-This app is for daily organization. It gives you a way to create google calendar events and write notes by a command line interface at linux terminal.
- 
 ## Instructions
  - Before using the app you have to create a directory to credentials into *src/*:
 
